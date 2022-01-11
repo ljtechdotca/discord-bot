@@ -20,6 +20,8 @@ const commands = [
       option
         .setName("range")
         .setDescription("The max roll range.")
+        .setMinValue(1)
+        .setMaxValue(10)
         .setRequired(true)
     ),
 ].map((command) => command.toJSON());
