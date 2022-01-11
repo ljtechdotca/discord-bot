@@ -1,0 +1,7 @@
+# env
+.env
+config.json
+node_modules
+
+# todo
+*.todo
