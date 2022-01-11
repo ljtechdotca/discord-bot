@@ -1,10 +1,15 @@
 const { Client, Intents } = require("discord.js");
 require("dotenv").config();
+const { channels } = require("./constants");
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
 client.once("ready", () => {
   console.log("Client Ready!");
+});
+
+client.on("guildMemberAdd", (member) => {
+  member.guild.channels.get(channels.general).send(`Welcome ${member.tag}!`);
 });
 
 client.on("interactionCreate", async (interaction) => {
