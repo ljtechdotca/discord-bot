@@ -1,6 +1,16 @@
 const { Client, Intents } = require("discord.js");
 require("dotenv").config();
-const { channels } = require("./constants");
+
+const channels = {
+  general: "788753558321102852",
+  programming: "816566602010198036",
+  frontend: "878815825719615498",
+  backend: "919583674608009246",
+  notifications: "815879442337366036",
+  suggestions: "815879463412826143",
+  socialMedia: "916772386563584121",
+  projects: "916774445568368674",
+};
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
