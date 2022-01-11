@@ -1,33 +1,7 @@
 const { Client, Intents } = require("discord.js");
-const { token } = require("./config.json");
-const { StaticAuthProvider } = require("@twurple/auth");
-const { ApiClient } = require("@twurple/api");
-const {
-  DirectConnectionAdapter,
-  EventSubListener,
-} = require("@twurple/eventsub");
-
-// Twitch keys
-// const accessToken = "blah";
-// const clientId = "blahh";
+require("dotenv").config();
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
-
-// todo : see _.todo file
-// const handleTwitchAuth = async () => {
-//   const authProvider = new StaticAuthProvider(clientId, accessToken);
-//   const apiClient = new ApiClient({ authProvider });
-//   const adapter = new DirectConnectionAdapter({
-//     hostName: "example.com",
-//     sslCert: {
-//       key: "aaa",
-//       cert: "bbb",
-//     },
-//   });
-//   const secret = "superSecret";
-//   const listener = new EventSubListener({ apiClient, adapter, secret });
-//   await listener.listen();
-// };
 
 client.once("ready", () => {
   console.log("Client Ready!");
@@ -65,4 +39,4 @@ client.on("interactionCreate", async (interaction) => {
   }
 });
 
-client.login(token);
+client.login(process.env.BOT_TOKEN);
