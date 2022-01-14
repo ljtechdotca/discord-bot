@@ -45,7 +45,7 @@ client.once("ready", async () => {
   await command.permissions.add({ permissions: INIT_PERMISSIONS });
 });
 
-// todo : fix this
+// todo : guild member add may be firing but its not sending messages
 client.on("guildMemberAdd", (member) => {
   member.guild.channels
     .get(INIT_CHANNELS.general)
@@ -60,11 +60,8 @@ client.on("interactionCreate", async (interaction) => {
   try {
     switch (commandName) {
       case "ping":
-        await interaction.reply("Pong!");
-        break;
-      case "server":
         await interaction.reply(
-          `Server info: ${interaction.guild.name}\nTotal members: ${interaction.guild.memberCount}`
+          "Just went live!\nhttps://www.twitch.tv/ljtechdotca"
         );
         break;
       case "user":
