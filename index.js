@@ -61,13 +61,14 @@ client.on("interactionCreate", async (interaction) => {
     switch (commandName) {
       case "ping":
         await interaction.channel.send(
-          "Just went live!\nhttps://www.twitch.tv/ljtechdotca"
+          "Hey @here! ljtechdotca just went live! Come hang and vibe: \nhttps://www.twitch.tv/ljtechdotca"
         );
         break;
-      case "user":
+      case "server":
         await interaction.reply(
-          `Your tag: ${interaction.user.tag}\nYour id: ${interaction.user.id}`
+          `Server info: ${interaction.guild.name}\nTotal members: ${interaction.guild.memberCount}`
         );
+        break;
       case "roll":
         const range = Math.max(interaction.options.get("range", true).value, 2);
         await interaction.reply(
