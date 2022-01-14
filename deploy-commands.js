@@ -6,16 +6,16 @@ require("dotenv").config();
 const commands = [
   new SlashCommandBuilder()
     .setName("ping")
-    .setDescription("Replies with pong!"),
+    .setDescription("https://www.twitch.tv/ljtechdotca")
+    .setDefaultPermission(false),
   new SlashCommandBuilder()
     .setName("server")
+    .setDefaultPermission(true)
     .setDescription("Replies with server info!"),
   new SlashCommandBuilder()
-    .setName("user")
-    .setDescription("Replies with user info!"),
-  new SlashCommandBuilder()
     .setName("roll")
-    .setDescription("Rolls a number between 0 and your input range!")
+    .setDefaultPermission(true)
+    .setDescription("Rolls a random number!")
     .addIntegerOption((option) =>
       option
         .setName("range")
@@ -24,7 +24,10 @@ const commands = [
         .setMaxValue(10)
         .setRequired(true)
     ),
-].map((command) => command.toJSON());
+].map((command) => {
+  console.log({ command });
+  return command.toJSON();
+});
 
 const rest = new REST({ version: "9" }).setToken(process.env.BOT_TOKEN);
 
@@ -36,5 +39,7 @@ rest
     ),
     { body: commands }
   )
-  .then(() => console.log("Successfully registered application commands."))
+  .then((response) =>
+    console.log("Successfully registered application commands.", response)
+  )
   .catch(console.error);

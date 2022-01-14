@@ -1,7 +1,18 @@
 const { Client, Intents } = require("discord.js");
+
 require("dotenv").config();
 
-const channels = {
+const INIT_COMMANDS = {
+  ping: "929534845716152401",
+  server: "929534845716152402",
+  roll: "929720345886351410",
+};
+
+const INIT_ROLES = {
+  admin: "812929873357307914",
+};
+
+const INIT_CHANNELS = {
   general: "788753558321102852",
   programming: "816566602010198036",
   frontend: "878815825719615498",
@@ -12,14 +23,33 @@ const channels = {
   projects: "916774445568368674",
 };
 
-const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+const INIT_PERMISSIONS = [
+  {
+    id: INIT_ROLES.admin,
+    type: "ROLE",
+    permission: true,
+  },
+];
 
-client.once("ready", () => {
-  console.log("Client Ready!");
+const client = new Client({
+  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS],
 });
 
+client.once("ready", async () => {
+  console.log("Client Ready!");
+
+  if (!client.application?.owner) await client.application?.fetch();
+  const command = await client.guilds.cache
+    .get(process.env.GUILD_ID)
+    ?.commands.fetch(INIT_COMMANDS.ping);
+  await command.permissions.add({ permissions: INIT_PERMISSIONS });
+});
+
+// todo : fix this
 client.on("guildMemberAdd", (member) => {
-  member.guild.channels.get(channels.general).send(`Welcome ${member.tag}!`);
+  member.guild.channels
+    .get(INIT_CHANNELS.general)
+    .send(`Welcome ${member.tag}!`);
 });
 
 client.on("interactionCreate", async (interaction) => {
@@ -42,8 +72,7 @@ client.on("interactionCreate", async (interaction) => {
           `Your tag: ${interaction.user.tag}\nYour id: ${interaction.user.id}`
         );
       case "roll":
-        const range = interaction.options.get("range", true).value;
-
+        const range = Math.max(interaction.options.get("range", true).value, 2);
         await interaction.reply(
           `${interaction.user.tag} is rolling 🎲\n${Math.ceil(
             Math.random() * range
