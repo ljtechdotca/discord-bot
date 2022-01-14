@@ -60,7 +60,7 @@ client.on("interactionCreate", async (interaction) => {
   try {
     switch (commandName) {
       case "ping":
-        await interaction.reply(
+        await interaction.channel.send(
           "Just went live!\nhttps://www.twitch.tv/ljtechdotca"
         );
         break;
