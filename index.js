@@ -32,7 +32,7 @@ const INIT_PERMISSIONS = [
 ];
 
 const client = new Client({
-  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS],
+  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBER_ADD],
 });
 
 client.once("ready", async () => {
@@ -45,11 +45,12 @@ client.once("ready", async () => {
   await command.permissions.add({ permissions: INIT_PERMISSIONS });
 });
 
-// todo : guild member add may be firing but its not sending messages
 client.on("guildMemberAdd", (member) => {
   member.guild.channels
     .get(INIT_CHANNELS.general)
-    .send(`Welcome ${member.tag}!`);
+    .send(
+      `Welcome ${member.tag}!\nNew total members: ${interaction.guild.memberCount}`
+    );
 });
 
 client.on("interactionCreate", async (interaction) => {
@@ -60,7 +61,7 @@ client.on("interactionCreate", async (interaction) => {
   try {
     switch (commandName) {
       case "ping":
-        await interaction.channel.send(
+        await interaction.reply(
           "Hey @here! ljtechdotca just went live! Come hang and vibe: \nhttps://www.twitch.tv/ljtechdotca"
         );
         break;

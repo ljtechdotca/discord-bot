@@ -6,7 +6,7 @@ require("dotenv").config();
 const commands = [
   new SlashCommandBuilder()
     .setName("ping")
-    .setDescription("https://www.twitch.tv/ljtechdotca")
+    .setDescription("Tell anyone @here that ljtechdotca is going live!")
     .setDefaultPermission(false),
   new SlashCommandBuilder()
     .setName("server")
