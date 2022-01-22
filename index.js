@@ -32,7 +32,10 @@ const INIT_PERMISSIONS = [
 ];
 
 const client = new Client({
-  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBER_ADD],
+  intents: [
+    Intents.FLAGS.GUILDS,
+    Intents.FLAGS.GUILD_MEMBERS,
+  ],
 });
 
 client.once("ready", async () => {
