@@ -1,4 +1,4 @@
-const { Client, Intents } = require("discord.js");
+const { Client, Intents, GuildMember } = require("discord.js");
 
 require("dotenv").config();
 
@@ -32,10 +32,7 @@ const INIT_PERMISSIONS = [
 ];
 
 const client = new Client({
-  intents: [
-    Intents.FLAGS.GUILDS,
-    Intents.FLAGS.GUILD_MEMBERS,
-  ],
+  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS],
 });
 
 client.once("ready", async () => {
@@ -49,11 +46,9 @@ client.once("ready", async () => {
 });
 
 client.on("guildMemberAdd", (member) => {
-  member.guild.channels
+  client.channels.cache
     .get(INIT_CHANNELS.general)
-    .send(
-      `Welcome ${member.tag}!\nNew total members: ${interaction.guild.memberCount}`
-    );
+    .send(`Welcome @${member.displayName}! <:ljtechGasp:910220378134183978>`);
 });
 
 client.on("interactionCreate", async (interaction) => {
