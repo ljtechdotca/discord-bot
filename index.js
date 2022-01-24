@@ -66,7 +66,7 @@ client.once("ready", async () => {
 client.on("guildMemberAdd", (member) => {
   client.channels.cache
     .get(INIT_CHANNELS.general)
-    .send(`Welcome @${member.displayName}! ${INIT_EMOJIS.hype.code}`);
+    .send(`Welcome <@${member.user.id}>! ${INIT_EMOJIS.hype.code}`);
 });
 
 client.on("interactionCreate", async (interaction) => {
@@ -92,7 +92,7 @@ client.on("interactionCreate", async (interaction) => {
         const range = Math.max(interaction.options.get("range", true).value, 2);
         const roll = Math.ceil(Math.random() * range);
         await interaction.reply({
-          content: `${interaction.user.username} is feeling lucky...`,
+          content: `<@${interaction.user.id}> is feeling lucky...`,
           ephemeral: true,
         });
         await interaction.followUp({
@@ -100,12 +100,12 @@ client.on("interactionCreate", async (interaction) => {
           ephemeral: true,
         });
         await interaction.followUp({
-          content: `${interaction.user.username} rolled a ${roll}!`,
+          content: `<@${interaction.user.id}> rolled a ${roll}!`,
           ephemeral: true,
         });
         if (range === roll) {
           await interaction.followUp(
-            `@${interaction.user.username} is a WINNER! ${INIT_EMOJIS.gasp.code}`
+            `<@${interaction.user.id}> is a WINNER! ${INIT_EMOJIS.gasp.code}`
           );
         }
         break;
