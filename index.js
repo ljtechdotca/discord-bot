@@ -83,7 +83,6 @@ client.on("interactionCreate", async (interaction) => {
         await interaction.reply(INIT_EMOJIS.derp.code);
         await interaction.deleteReply();
         break;
-
       case "server":
         await interaction.reply(
           `Server info: ${interaction.guild.name}\nTotal members: ${interaction.guild.memberCount}`
@@ -92,11 +91,22 @@ client.on("interactionCreate", async (interaction) => {
       case "roll":
         const range = Math.max(interaction.options.get("range", true).value, 2);
         const roll = Math.ceil(Math.random() * range);
-        await interaction.reply(`${interaction.user.tag} is feeling lucky...`);
-        await interaction.followUp(`Rolling a ${range} sided die.`);
-        await interaction.followUp(`${interaction.user.tag} rolled a ${roll}!`);
+        await interaction.reply({
+          content: `${interaction.user.tag} is feeling lucky...`,
+          ephemeral: true,
+        });
+        await interaction.followUp({
+          content: `Rolling a ${range} sided die.`,
+          ephemeral: true,
+        });
+        await interaction.followUp({
+          content: `${interaction.user.tag} rolled a ${roll}!`,
+          ephemeral: true,
+        });
         if (range === roll) {
-          await interaction.followUp(`${INIT_EMOJIS.gasp.code} WINNER!`);
+          await interaction.followUp(
+            `@${interaction.user.tag} is a WINNER! ${INIT_EMOJIS.gasp.code}`
+          );
         }
         break;
       default:
