@@ -22,7 +22,6 @@ const INIT_EMOJIS = {
 
 const INIT_COMMANDS = {
   ping: "929534845716152401",
-  test: "934972731768852510",
   server: "929534845716152402",
   roll: "929720345886351410",
 };
@@ -81,16 +80,10 @@ client.on("interactionCreate", async (interaction) => {
         await interaction.channel.send(
           `Hey @here! ljtechdotca just went live! Come hang and vibe: \nhttps://www.twitch.tv/ljtechdotca ${INIT_EMOJIS.hype.code}`
         );
-        await interaction.reply("PONG!");
+        await interaction.reply(INIT_EMOJIS.derp.code);
         await interaction.deleteReply();
         break;
-      case "test":
-        await interaction.channel.send(
-          `Testing something ${INIT_EMOJIS.derp.code}`
-        );
-        await interaction.reply(INIT_EMOJIS.gasp.code);
-        await interaction.deleteReply();
-        break;
+
       case "server":
         await interaction.reply(
           `Server info: ${interaction.guild.name}\nTotal members: ${interaction.guild.memberCount}`
@@ -98,11 +91,13 @@ client.on("interactionCreate", async (interaction) => {
         break;
       case "roll":
         const range = Math.max(interaction.options.get("range", true).value, 2);
-        await interaction.reply(
-          `${interaction.user.tag} is rolling ${
-            INIT_EMOJIS.gasp.code
-          }\n${Math.ceil(Math.random() * range)} / ${range}`
-        );
+        const roll = Math.ceil(Math.random() * range);
+        await interaction.reply(`${interaction.user.tag} is feeling lucky...`);
+        await interaction.followUp(`Rolling a ${range} sided die.`);
+        await interaction.followUp(`${interaction.user.tag} rolled a ${roll}!`);
+        if (range === roll) {
+          await interaction.followUp(`${INIT_EMOJIS.gasp.code} WINNER!`);
+        }
         break;
       default:
         throw new Error("Bad Command Name!");

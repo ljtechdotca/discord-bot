@@ -6,12 +6,8 @@ require("dotenv").config();
 const commands = [
   new SlashCommandBuilder()
     .setName("ping")
-    .setDescription("Tell anyone @here that ljtechdotca is going live!")
-    .setDefaultPermission(false),
-  new SlashCommandBuilder()
-    .setName("test")
-    .setDescription("Testing command")
-    .setDefaultPermission(false),
+    .setDefaultPermission(false)
+    .setDescription("Tell anyone @here that ljtechdotca is going live!"),
   new SlashCommandBuilder()
     .setName("server")
     .setDefaultPermission(true)
