@@ -92,7 +92,7 @@ client.on("interactionCreate", async (interaction) => {
         const range = Math.max(interaction.options.get("range", true).value, 2);
         const roll = Math.ceil(Math.random() * range);
         await interaction.reply({
-          content: `${interaction.user.tag} is feeling lucky...`,
+          content: `${interaction.user.username} is feeling lucky...`,
           ephemeral: true,
         });
         await interaction.followUp({
@@ -100,12 +100,12 @@ client.on("interactionCreate", async (interaction) => {
           ephemeral: true,
         });
         await interaction.followUp({
-          content: `${interaction.user.tag} rolled a ${roll}!`,
+          content: `${interaction.user.username} rolled a ${roll}!`,
           ephemeral: true,
         });
         if (range === roll) {
           await interaction.followUp(
-            `@${interaction.user.tag} is a WINNER! ${INIT_EMOJIS.gasp.code}`
+            `@${interaction.user.username} is a WINNER! ${INIT_EMOJIS.gasp.code}`
           );
         }
         break;
