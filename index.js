@@ -59,9 +59,11 @@ client.on("interactionCreate", async (interaction) => {
   try {
     switch (commandName) {
       case "ping":
-        await interaction.reply(
+        await interaction.channel.send(
           "Hey @here! ljtechdotca just went live! Come hang and vibe: \nhttps://www.twitch.tv/ljtechdotca"
         );
+        await interaction.reply("");
+        await interaction.deleteReply();
         break;
       case "server":
         await interaction.reply(
