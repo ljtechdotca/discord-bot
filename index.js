@@ -84,29 +84,27 @@ client.on("interactionCreate", async (interaction) => {
         await interaction.deleteReply();
         break;
       case "server":
-        await interaction.reply(
-          `Server info: ${interaction.guild.name}\nTotal members: ${interaction.guild.memberCount}`
-        );
+        await interaction.reply({
+          content: `Server info: ${interaction.guild.name}\nTotal members: ${interaction.guild.memberCount}`,
+          ephemeral: true,
+        });
         break;
       case "roll":
         const range = Math.max(interaction.options.get("range", true).value, 2);
         const roll = Math.ceil(Math.random() * range);
         await interaction.reply({
-          content: `<@${interaction.user.id}> is feeling lucky...`,
-          ephemeral: true,
-        });
-        await interaction.followUp({
           content: `Rolling a ${range} sided die.`,
           ephemeral: true,
         });
         await interaction.followUp({
-          content: `<@${interaction.user.id}> rolled a ${roll}!`,
+          content: `You rolled a ${roll}!`,
           ephemeral: true,
         });
         if (range === roll) {
-          await interaction.followUp(
-            `<@${interaction.user.id}> is a WINNER! ${INIT_EMOJIS.gasp.code}`
-          );
+          await interaction.followUp({
+            content: `WINNER! ${INIT_EMOJIS.gasp.code}`,
+            ephemeral: true,
+          });
         }
         break;
       default:
