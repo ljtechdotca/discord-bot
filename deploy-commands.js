@@ -9,6 +9,10 @@ const commands = [
     .setDescription("Tell anyone @here that ljtechdotca is going live!")
     .setDefaultPermission(false),
   new SlashCommandBuilder()
+    .setName("test")
+    .setDescription("Testing command")
+    .setDefaultPermission(false),
+  new SlashCommandBuilder()
     .setName("server")
     .setDefaultPermission(true)
     .setDescription("Replies with server info!"),

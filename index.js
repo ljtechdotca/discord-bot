@@ -2,8 +2,27 @@ const { Client, Intents, GuildMember } = require("discord.js");
 
 require("dotenv").config();
 
+const INIT_EMOJIS = {
+  hype: {
+    id: "910220377932828713",
+    name: "ljtechHype",
+    code: "<:ljtechHype:910220377932828713>",
+  },
+  gasp: {
+    id: "910220378134183978",
+    name: "ljtechGasp",
+    code: "<:ljtechGasp:910220378134183978>",
+  },
+  derp: {
+    id: "910220378025103401",
+    name: "ljtechDerp",
+    code: "<:ljtechDerp:910220378025103401>",
+  },
+};
+
 const INIT_COMMANDS = {
   ping: "929534845716152401",
+  test: "934972731768852510",
   server: "929534845716152402",
   roll: "929720345886351410",
 };
@@ -48,7 +67,7 @@ client.once("ready", async () => {
 client.on("guildMemberAdd", (member) => {
   client.channels.cache
     .get(INIT_CHANNELS.general)
-    .send(`Welcome @${member.displayName}! <:ljtechGasp:910220378134183978>`);
+    .send(`Welcome @${member.displayName}! ${INIT_EMOJIS.hype.code}`);
 });
 
 client.on("interactionCreate", async (interaction) => {
@@ -60,9 +79,16 @@ client.on("interactionCreate", async (interaction) => {
     switch (commandName) {
       case "ping":
         await interaction.channel.send(
-          "Hey @here! ljtechdotca just went live! Come hang and vibe: \nhttps://www.twitch.tv/ljtechdotca"
+          `Hey @here! ljtechdotca just went live! Come hang and vibe: \nhttps://www.twitch.tv/ljtechdotca ${INIT_EMOJIS.hype.code}`
         );
-        await interaction.reply("");
+        await interaction.reply("PONG!");
+        await interaction.deleteReply();
+        break;
+      case "test":
+        await interaction.channel.send(
+          `Testing something ${INIT_EMOJIS.derp.code}`
+        );
+        await interaction.reply(INIT_EMOJIS.gasp.code);
         await interaction.deleteReply();
         break;
       case "server":
@@ -73,9 +99,9 @@ client.on("interactionCreate", async (interaction) => {
       case "roll":
         const range = Math.max(interaction.options.get("range", true).value, 2);
         await interaction.reply(
-          `${interaction.user.tag} is rolling 🎲\n${Math.ceil(
-            Math.random() * range
-          )} / ${range}`
+          `${interaction.user.tag} is rolling ${
+            INIT_EMOJIS.gasp.code
+          }\n${Math.ceil(Math.random() * range)} / ${range}`
         );
         break;
       default:
