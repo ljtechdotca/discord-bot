@@ -77,11 +77,11 @@ client.on("interactionCreate", async (interaction) => {
   try {
     switch (commandName) {
       case "ping":
+        await interaction.reply("Pinging server members...");
+        await interaction.deleteReply();
         await interaction.channel.send(
           `Hey @here! ljtechdotca just went live! Come hang and vibe: \nhttps://www.twitch.tv/ljtechdotca ${INIT_EMOJIS.hype.code}`
         );
-        await interaction.reply(INIT_EMOJIS.derp.code);
-        await interaction.deleteReply();
         break;
       case "server":
         await interaction.reply({
