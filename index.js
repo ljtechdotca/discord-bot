@@ -51,6 +51,7 @@ const INIT_PERMISSIONS = [
 
 const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS],
+  autoReconnect: true,
 });
 
 client.once("ready", async () => {
