@@ -21,9 +21,7 @@ const INIT_EMOJIS = {
 };
 
 const INIT_COMMANDS = {
-  ping: "929534845716152401",
-  server: "929534845716152402",
-  roll: "929720345886351410",
+  ping: "936031927973068851",
 };
 
 const INIT_ROLES = {
@@ -51,7 +49,6 @@ const INIT_PERMISSIONS = [
 
 const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS],
-  autoReconnect: true,
 });
 
 client.once("ready", async () => {

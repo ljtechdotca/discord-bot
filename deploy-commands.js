@@ -39,7 +39,7 @@ rest
     ),
     { body: commands }
   )
-  .then((response) =>
-    console.log("Successfully registered application commands.", response)
-  )
+  .then((response) => {
+    console.log("Successfully registered application commands.", response);
+  })
   .catch(console.error);
