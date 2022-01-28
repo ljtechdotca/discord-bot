@@ -1,6 +1,8 @@
-const { Client, Intents, GuildMember } = require("discord.js");
-
+const { Client, Intents, GuildMember, Collection } = require("discord.js");
+const fs = require("fs");
 require("dotenv").config();
+
+// todo : replace hard coded ids with dynamic ids
 
 const INIT_EMOJIS = {
   hype: {
@@ -47,67 +49,40 @@ const INIT_PERMISSIONS = [
   },
 ];
 
+// create a new client - add intents options
 const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS],
 });
 
-client.once("ready", async () => {
-  console.log("Client Ready!");
+// create a new collection - read and save commands
+client.commands = new Collection();
+const commandFiles = fs
+  .readdirSync("./commands")
+  .filter((file) => file.endsWith(".js"));
+for (const file of commandFiles) {
+  const command = require(`./commands/${file}`);
+  client.commands.set(command.data.name, command);
+}
 
-  if (!client.application?.owner) await client.application?.fetch();
-  const command = await client.guilds.cache
-    .get(process.env.GUILD_ID)
-    ?.commands.fetch(INIT_COMMANDS.ping);
-  await command.permissions.add({ permissions: INIT_PERMISSIONS });
+// client ready - fetch command permissions
+client.once("ready", async (client) => {
+  console.log("Client Ready!");
+  console.log(client.application.commands);
 });
 
+// welcome members - say hello to newbies
 client.on("guildMemberAdd", (member) => {
   client.channels.cache
     .get(INIT_CHANNELS.general)
     .send(`Welcome <@${member.user.id}>! ${INIT_EMOJIS.hype.code}`);
 });
 
+// create interactions - dynamic command handler
 client.on("interactionCreate", async (interaction) => {
   if (!interaction.isCommand()) return;
-
-  const { commandName } = interaction;
-
+  const command = client.commands.get(interaction.commandName);
   try {
-    switch (commandName) {
-      case "ping":
-        await interaction.reply("Pinging server members...");
-        await interaction.deleteReply();
-        await interaction.channel.send(
-          `Hey @here! ljtechdotca just went live! Come hang and vibe: \nhttps://www.twitch.tv/ljtechdotca ${INIT_EMOJIS.hype.code}`
-        );
-        break;
-      case "server":
-        await interaction.reply({
-          content: `Server info: ${interaction.guild.name}\nTotal members: ${interaction.guild.memberCount}`,
-          ephemeral: true,
-        });
-        break;
-      case "roll":
-        const range = Math.max(interaction.options.get("range", true).value, 2);
-        const roll = Math.ceil(Math.random() * range);
-        await interaction.reply({
-          content: `Rolling a ${range} sided die.`,
-          ephemeral: true,
-        });
-        await interaction.followUp({
-          content: `You rolled a ${roll}!`,
-          ephemeral: true,
-        });
-        if (range === roll) {
-          await interaction.followUp({
-            content: `WINNER! ${INIT_EMOJIS.gasp.code}`,
-            ephemeral: true,
-          });
-        }
-        break;
-      default:
-        throw new Error("Bad Command Name!");
-    }
+    await command.execute(interaction);
   } catch (error) {
     console.error(error);
   }

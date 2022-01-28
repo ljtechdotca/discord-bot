@@ -1,33 +1,18 @@
-const { SlashCommandBuilder } = require("@discordjs/builders");
+// const { SlashCommandBuilder } = require("@discordjs/builders");
+const fs = require("fs");
 const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v9");
 require("dotenv").config();
 
-const commands = [
-  new SlashCommandBuilder()
-    .setName("ping")
-    .setDefaultPermission(false)
-    .setDescription("Tell anyone @here that ljtechdotca is going live!"),
-  new SlashCommandBuilder()
-    .setName("server")
-    .setDefaultPermission(true)
-    .setDescription("Replies with server info!"),
-  new SlashCommandBuilder()
-    .setName("roll")
-    .setDefaultPermission(true)
-    .setDescription("Rolls a random number!")
-    .addIntegerOption((option) =>
-      option
-        .setName("range")
-        .setDescription("The max roll range.")
-        .setMinValue(1)
-        .setMaxValue(10)
-        .setRequired(true)
-    ),
-].map((command) => {
-  console.log({ command });
-  return command.toJSON();
-});
+const commands = [];
+
+const commandFiles = fs
+  .readdirSync("./commands")
+  .filter((file) => file.endsWith(".js"));
+for (const file of commandFiles) {
+  const command = require(`./commands/${file}`);
+  commands.push(command.data.toJSON());
+}
 
 const rest = new REST({ version: "9" }).setToken(process.env.BOT_TOKEN);
 
