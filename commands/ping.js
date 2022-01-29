@@ -9,10 +9,10 @@ module.exports = {
   async execute(interaction) {
     if (interaction.user.id === INIT_USERS.landon) {
       await interaction.reply("Pinging server members...");
-      await interaction.deleteReply();
       await interaction.channel.send(
         `Hey @here! ljtechdotca just went live! Come hang and vibe: \nhttps://www.twitch.tv/ljtechdotca ${INIT_EMOJIS.hype.code}`
       );
+      await interaction.deleteReply();
     }
   },
 };

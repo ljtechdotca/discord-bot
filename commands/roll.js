@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
+const { INIT_EMOJIS } = require("../constants");
 
 module.exports = {
   data: new SlashCommandBuilder()
