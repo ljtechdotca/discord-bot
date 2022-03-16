@@ -11,7 +11,6 @@ module.exports = {
       await interaction.reply(
         `${INIT_EMOJIS.hype.code}`
       );
-      // Hey @here! ljtechdotca just went live! Come hang and vibe: \nhttps://www.twitch.tv/ljtechdotca 
       await interaction.channel.send("Hey @here! ljtechdotca just went live! Come hang and vibe: \nhttps://www.twitch.tv/ljtechdotca")
     }
   },
