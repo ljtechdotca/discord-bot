@@ -31,5 +31,7 @@ module.exports = {
         ephemeral: true,
       });
     }
+    
+    await interaction.channel.send("Hello World this is a test! 🙋‍♀️");
   },
 };
