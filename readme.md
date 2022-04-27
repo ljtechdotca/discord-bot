@@ -1,8 +1,3 @@
 # Discord Bot
 
-This is the discord bot used for ljtechdotca. Join the community here: https://discord.gg/F6nDGk5HKU
-
-## Tech Stack
-
-- Node.js
-- JavaScript
+This is the bot used for the ljtechdotca community on Discord. Join us: https://discord.gg/F6nDGk5HKU

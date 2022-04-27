@@ -1,7 +1,7 @@
 {
   "name": "discord-bot",
   "version": "1.0.0",
-  "description": "My Discord bot used for Twitch notifications.",
+  "description": "Discord bot used for Twitch notifications and other things.",
   "main": "index.js",
   "author": "ljtechdotca",
   "license": "MIT",
@@ -14,9 +14,6 @@
   "dependencies": {
     "@discordjs/builders": "^0.11.0",
     "@discordjs/rest": "^0.2.0-canary.0",
-    "@twurple/api": "^5.0.13",
-    "@twurple/auth": "^5.0.13",
-    "@twurple/eventsub": "^5.0.13",
     "discord-api-types": "^0.26.1",
     "discord.js": "^13.5.1",
     "dotenv": "^10.0.0"
